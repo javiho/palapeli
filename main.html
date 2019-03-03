@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .tile{
+            /*transition-property: background-color;
+            transition-duration: 3s;
+            background-color: red;*/
+
+            background-color: red;
+            border: solid 2px black;
+
+            position: absolute;
+            transition-property: left, top;
+            transition-duration: 1s;
+            transition-timing-function: ease-in-out;
+        }
+        #puzzle-area{
+            /*
+            If a parent element either has position: relative or position: absolute set on it,
+            then it will act as the parent for positioning coordinates for its children.
+             */
+            position: relative;
+            left: 100px;
+            top: 0px;
+        }
+
+        #game-state-info{
+            position: relative;
+            left: 100px;
+        }
+
+        #top-spacing-div{
+            height: 50px;
+        }
+
+        .tile {
+            background-image:url("testikuva.jpg");
+            /*width:100px;
+            height:100px;*/
+        }
+
+        /*
+        .piece1 {
+            background-position:0 0
+        }
+
+        .piece2 {
+            background-position:-100px -100px
+        }*/
+    </style>
+</head>
+<body>
+
+<div id="top-spacing-div">
+
+</div>
+<div id="game-state-info">
+    AAAAAAAAAAAAAA AAAAAAAAAAAA AAAAAAAAAAAAAAAA
+</div>
+<div id="puzzle-area">
+    <!--
+    The elements will be like this:
+    <div class="tile" style="background-position: [x]px, [y]px;">
+    -->
+</div>
+<!--
+    <div class="puzzle piece1"></div>
+    <div class="puzzle piece2"></div>
+-->
+
+
+<!--
+<div id="testTile" class="tile">Kek</div>
+<button onclick="animateTile()">button</button>
+-->
+<script src="main.js"></script>
+</body>
+</html>
