@@ -1,22 +1,24 @@
 "use strict";
 /*
-Kuva on aina neliön muotoinen. Se on jaettu niin että on n*n - 1 ruutua.
-Kun klikataan ruutua
-    - jos viereinen on tyhjä, siirretään siihen. jos ei, ei tapahdu mitään
-    - kun on siirretty, tarkistetaan, onko palapeli valmis.
-//On matriisi, jossa on ruutujen id:t oikeilla paikoilla ja null oikeassa tyhjässä paikassa.
-//Ruuduilla on id:t niin, että ne ovat oikeassa järjestyksessä niiden mukaan, jos ne ladotaan riveittäin.
-Ruuduilla on oikea rivi ja oikea sarake,
-Aluksi laitetaan ruudut satunnaiseen järjestykseen ja tyhjä satunnaiseen paikkaan.
+Tehtävää:
+- peli on päättynyt -ilmoitus
+- sekoita-nappi
+- mahdollisuus säätää palojen määrää sivulla
+- mahdollisuus ladata uusi kuva
+- mahdollisuus valita kuvista
+- layout keskemmälle, tai napit palapelin oikealle puolelle
  */
 const sideLength = 3;
 const tileWidthPixels = 100;
+const tileBorderWidthPixels = 4;
 let puzzleCompleted = false;
 const tiles = createTiles(sideLength);
-//onsole.log("tiles:", tiles.length);
+//console.log("tiles:", tiles.length);
 assignTilesRandomPositionsInGrid(tiles, sideLength);
 console.log("tiles:", tiles);
 drawTiles(tiles);
+setPuzzleAreaSize();
+
 
 document.addEventListener("click", function(event){
     if(event.target.classList.contains("tile")){
@@ -26,6 +28,13 @@ document.addEventListener("click", function(event){
         }else{
             alert("Peli on ohi");
         }
+    }
+    if(event.target.getAttribute("id") === "shuffle-button"){
+        assignTilesRandomPositionsInGrid(tiles, sideLength);
+        for(let tile of tiles){
+            moveTileElement(tile);
+        }
+        //drawTiles(tiles);
     }
 });
 
@@ -41,10 +50,24 @@ function tileClickHandler(event){
         moveTileElement(tile);
         if(isPuzzleCompleted()){
             puzzleCompleted = true;
+            displayGameEndedInfo();
         }
     }else{
         console.log("Can't move this tile.");
     }
+}
+
+function displayGameEndedInfo(){
+    document.getElementById("completed-icon").style.display = "inline-block";
+    document.body.style.backgroundColor = "lightgreen"
+}
+
+function setPuzzleAreaSize(){
+    const puzzleArea = document.getElementById("puzzle-area");
+    const width = sideLength * (tileWidthPixels + tileBorderWidthPixels) + tileBorderWidthPixels;
+    const widthString = width+"px";
+    puzzleArea.style.width = widthString;
+    puzzleArea.style.height = widthString; // It's a square.
 }
 
 /*
@@ -58,8 +81,8 @@ function drawTiles(tiles){
         tileElement.classList.add("tile");
         //tileElement.textContent = tile.image;
         //tileElement.setAttribute("src", "square.jpg");
-        const puzzleImageXOffset = tile.correctCol * tileWidthPixels * -1;
-        const puzzleImageYOffset = tile.correctRow * tileWidthPixels * -1;
+        const puzzleImageXOffset = -1 * (tile.correctCol * tileWidthPixels);
+        const puzzleImageYOffset = -1 * (tile.correctRow * tileWidthPixels);
         const backgroundPositionValue = puzzleImageXOffset+"px "+puzzleImageYOffset+"px";
         tileElement.style.backgroundPosition = backgroundPositionValue;
         puzzleAreaElement.appendChild(tileElement);
@@ -85,7 +108,11 @@ function moveTileElement(tile){
 }
 
 function getCoordinatesByRowAndCol(row, col){
-    return {x: tileWidthPixels * col, y: tileWidthPixels * row};
+    const tileWidthWithBorders = tileWidthPixels + tileBorderWidthPixels;
+    return {
+        x: (tileWidthWithBorders * col) + tileBorderWidthPixels,
+        y: (tileWidthWithBorders * row) + tileBorderWidthPixels
+    };
 }
 
 function createTiles(sideLength){

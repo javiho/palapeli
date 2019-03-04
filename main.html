@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        body{
+            background-color: white;
+        }
+
         .tile{
             /*transition-property: background-color;
             transition-duration: 3s;
             background-color: red;*/
 
+            box-sizing: content-box;
+            background-image:url("testikuva.jpg");
             background-color: red;
-            border: solid 2px black;
+            /*border: solid 1px black;*/
+            outline: 1.5px solid black;
 
             position: absolute;
             transition-property: left, top;
@@ -25,19 +32,40 @@
             position: relative;
             left: 100px;
             top: 0px;
+
+            background-color: white;
+            /*border: 2px solid black;
+            height: 500px;
+            width: 500px;*/
         }
 
         #game-state-info{
             position: relative;
             left: 100px;
+            height: 50px;
+            padding-bottom: 5px;
         }
 
         #top-spacing-div{
             height: 50px;
         }
+        
+        #completed-icon{
+            height: 50px;
+            display: nonae;
+        }
+
+        #shuffle-button{
+            height: 50px;
+            width: 50px;
+            background-size: contain;
+            background: url("card-exchange.svg") no-repeat;
+            display: inline-block;
+            cursor: pointer;
+        }
 
         .tile {
-            background-image:url("testikuva.jpg");
+
             /*width:100px;
             height:100px;*/
         }
@@ -58,7 +86,11 @@
 
 </div>
 <div id="game-state-info">
-    AAAAAAAAAAAAAA AAAAAAAAAAAA AAAAAAAAAAAAAAAA
+    <img id="completed-icon" src="check-mark.svg" alt="Check mark icon by Delapouite http://delapouite.com
+    under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/">
+    <button id="shuffle-button">
+
+    </button>
 </div>
 <div id="puzzle-area">
     <!--
@@ -71,6 +103,9 @@
     <div class="puzzle piece2"></div>
 -->
 
+<!--
+Check mark icon by Delapouite http://delapouite.com under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+-->
 
 <!--
 <div id="testTile" class="tile">Kek</div>
