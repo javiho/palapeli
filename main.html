@@ -14,8 +14,9 @@
             background-color: red;*/
 
             box-sizing: content-box;
-            background-image:url("testikuva.jpg");
-            background-color: red;
+            background-image: url("testikuva.jpg");
+            background-repeat: no-repeat;
+            background-color: black;
             /*border: solid 1px black;*/
             outline: 1.5px solid black;
 
@@ -52,7 +53,7 @@
         
         #completed-icon{
             height: 50px;
-            display: nonae;
+            display: none;
         }
 
         #shuffle-button{
@@ -62,12 +63,6 @@
             background: url("card-exchange.svg") no-repeat;
             display: inline-block;
             cursor: pointer;
-        }
-
-        .tile {
-
-            /*width:100px;
-            height:100px;*/
         }
 
         /*
@@ -98,6 +93,7 @@
     <div class="tile" style="background-position: [x]px, [y]px;">
     -->
 </div>
+<img id="hidden-image" src="testikuva.jpg" hidden>
 <!--
     <div class="puzzle piece1"></div>
     <div class="puzzle piece2"></div>

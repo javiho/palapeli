@@ -1,22 +1,25 @@
 "use strict";
 /*
 Tehtävää:
-- peli on päättynyt -ilmoitus
 - sekoita-nappi
 - mahdollisuus säätää palojen määrää sivulla
 - mahdollisuus ladata uusi kuva
 - mahdollisuus valita kuvista
 - layout keskemmälle, tai napit palapelin oikealle puolelle
+- mahdollisuus huijata vaihtamalla kahden paikkaa keskenään
+- pitäisi tepahtua jotain muuta kuin alert kun klikkaa ruudusta pelin päättymisen jälkeen
  */
-const sideLength = 3;
+const sideLength = 2;
 const tileWidthPixels = 100;
 const tileBorderWidthPixels = 4;
 let puzzleCompleted = false;
+const naturalImageDimensions = getNaturalImageDimensions();
+const imageDimensions = getAdjustedImageDimensions(naturalImageDimensions);
 const tiles = createTiles(sideLength);
 //console.log("tiles:", tiles.length);
 assignTilesRandomPositionsInGrid(tiles, sideLength);
 console.log("tiles:", tiles);
-drawTiles(tiles);
+drawTiles(tiles, imageDimensions);
 setPuzzleAreaSize();
 
 
@@ -30,6 +33,10 @@ document.addEventListener("click", function(event){
         }
     }
     if(event.target.getAttribute("id") === "shuffle-button"){
+        if(puzzleCompleted){
+            puzzleCompleted = false;
+            updateGameEndedInfo();
+        }
         assignTilesRandomPositionsInGrid(tiles, sideLength);
         for(let tile of tiles){
             moveTileElement(tile);
@@ -37,6 +44,43 @@ document.addEventListener("click", function(event){
         //drawTiles(tiles);
     }
 });
+
+/*
+    Pre-condition: naturalDimensions has width and height.
+ */
+function getAdjustedImageDimensions(naturalDimensions){
+    const naturalWidth = naturalDimensions.width;
+    const naturalHeight = naturalDimensions.height;
+    let desiredWidth = null;
+    let desiredHeight = null;
+    if(naturalWidth < naturalHeight){
+        desiredWidth = sideLength * tileWidthPixels;
+        const scale = desiredWidth / naturalWidth;
+        desiredHeight = naturalHeight * scale;
+    }else{
+        desiredHeight = sideLength * tileWidthPixels;
+        const scale = desiredHeight / naturalHeight;
+        desiredWidth = naturalWidth * scale;
+    }
+    return {width: desiredWidth, height: desiredWidth};
+}
+
+function getNaturalImageDimensions(){
+    /*
+    ensin ladataan näkymättömään elementtiin
+    otetaan leveys ja korkeus (document.getElementById("myImg").naturalWidth;)
+    niiden suhde palautetaan
+
+    myhöhemmin asetetaan taustakuvan koko: background-size: Xpx Ypx;
+    tehdään niin että tehdään lyhemmästä sivusta sideLength*tileWIdthPixels,
+    ja katsotaan, mikä on sen suhde alkuperäiseen. Sitten kerrotaan pidempi sivu
+    tällä suhteella ja laitetaan sen sivun kooksi tulo.
+     */
+    const hiddenImage = document.getElementById("hidden-image");
+    const imageWidth = hiddenImage.naturalWidth;
+    const imageHeight = hiddenImage.naturalHeight;
+    return {height: imageHeight, width: imageWidth};
+}
 
 function tileClickHandler(event){
     const tileElement = event.target;
@@ -50,16 +94,22 @@ function tileClickHandler(event){
         moveTileElement(tile);
         if(isPuzzleCompleted()){
             puzzleCompleted = true;
-            displayGameEndedInfo();
+            updateGameEndedInfo();
         }
     }else{
         console.log("Can't move this tile.");
     }
 }
 
-function displayGameEndedInfo(){
-    document.getElementById("completed-icon").style.display = "inline-block";
-    document.body.style.backgroundColor = "lightgreen"
+function updateGameEndedInfo(){
+    const completedIcon = document.getElementById("completed-icon");
+    if(puzzleCompleted) {
+        completedIcon.style.display = "inline-block";
+        document.body.style.backgroundColor = "lightgreen"
+    }else{
+        completedIcon.style.display = "none";
+        document.body.style.backgroundColor = "";
+    }
 }
 
 function setPuzzleAreaSize(){
@@ -72,8 +122,9 @@ function setPuzzleAreaSize(){
 
 /*
     For initial drawing.
+    Pre-condition: imageDimensions has width and height.
  */
-function drawTiles(tiles){
+function drawTiles(tiles, imageDimensions){
     const puzzleAreaElement = document.getElementById("puzzle-area");
     tiles.forEach(function(tile){
         const tileElement = document.createElement("div");
@@ -81,6 +132,8 @@ function drawTiles(tiles){
         tileElement.classList.add("tile");
         //tileElement.textContent = tile.image;
         //tileElement.setAttribute("src", "square.jpg");
+        const imageSizeValue = imageDimensions.width+"px "+imageDimensions.height+"px";
+        tileElement.style.backgroundSize = imageSizeValue; //"100px 100px";
         const puzzleImageXOffset = -1 * (tile.correctCol * tileWidthPixels);
         const puzzleImageYOffset = -1 * (tile.correctRow * tileWidthPixels);
         const backgroundPositionValue = puzzleImageXOffset+"px "+puzzleImageYOffset+"px";
