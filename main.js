@@ -1,15 +1,14 @@
 "use strict";
 /*
 Tehtävää:
-- sekoita-nappi
-- mahdollisuus säätää palojen määrää sivulla
 - mahdollisuus ladata uusi kuva
-- mahdollisuus valita kuvista
-- layout keskemmälle, tai napit palapelin oikealle puolelle
+    - mahdollisuus valita kuvista
+    - mahdollisuus säätää palojen määrää sivulla
+- layout keskemmälle?
 - mahdollisuus huijata vaihtamalla kahden paikkaa keskenään
 - pitäisi tepahtua jotain muuta kuin alert kun klikkaa ruudusta pelin päättymisen jälkeen
  */
-const sideLength = 2;
+const sideLength = 3;
 const tileWidthPixels = 100;
 const tileBorderWidthPixels = 4;
 let puzzleCompleted = false;
@@ -29,7 +28,7 @@ document.addEventListener("click", function(event){
             console.log("A tile was clicked");
             tileClickHandler(event);
         }else{
-            alert("Peli on ohi");
+            console.log("Game is over. Clicking tile does nothing.");
         }
     }
     if(event.target.getAttribute("id") === "shuffle-button"){
@@ -47,6 +46,7 @@ document.addEventListener("click", function(event){
 
 /*
     Pre-condition: naturalDimensions has width and height.
+    // TODO: mahdollisuus vaihtaa määrääkö lyhin vai pisin sivu kuvan koon.
  */
 function getAdjustedImageDimensions(naturalDimensions){
     const naturalWidth = naturalDimensions.width;
@@ -62,7 +62,7 @@ function getAdjustedImageDimensions(naturalDimensions){
         const scale = desiredHeight / naturalHeight;
         desiredWidth = naturalWidth * scale;
     }
-    return {width: desiredWidth, height: desiredWidth};
+    return {width: desiredWidth, height: desiredHeight};
 }
 
 function getNaturalImageDimensions(){
@@ -107,7 +107,7 @@ function updateGameEndedInfo(){
         completedIcon.style.display = "inline-block";
         document.body.style.backgroundColor = "lightgreen"
     }else{
-        completedIcon.style.display = "none";
+        completedIcon.style.display = "inline-block";
         document.body.style.backgroundColor = "";
     }
 }

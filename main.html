@@ -33,6 +33,7 @@
             position: relative;
             left: 100px;
             top: 0px;
+            float: left;
 
             background-color: white;
             /*border: 2px solid black;
@@ -40,11 +41,26 @@
             width: 500px;*/
         }
 
+        #puzzle-area:after{
+            content: '';
+            display: block;
+            position: relative;
+            left: 10px;
+            height: 100%;
+            border-right-style: solid;
+            border-right-width: 1px;
+            border-right-color: #888888;
+        }
+
         #game-state-info{
+            display: run-in;
             position: relative;
             left: 100px;
-            height: 50px;
+            height: 100px;
+            float: left;
+
             padding-bottom: 5px;
+            margin-left: 15px;
         }
 
         #top-spacing-div{
@@ -61,7 +77,7 @@
             width: 50px;
             background-size: contain;
             background: url("card-exchange.svg") no-repeat;
-            display: inline-block;
+            display: block;
             cursor: pointer;
         }
 
@@ -80,33 +96,22 @@
 <div id="top-spacing-div">
 
 </div>
-<div id="game-state-info">
-    <img id="completed-icon" src="check-mark.svg" alt="Check mark icon by Delapouite http://delapouite.com
-    under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/">
-    <button id="shuffle-button">
-
-    </button>
-</div>
+<div id="container1">
 <div id="puzzle-area">
     <!--
     The elements will be like this:
     <div class="tile" style="background-position: [x]px, [y]px;">
     -->
 </div>
+<div id="game-state-info">
+    <button id="shuffle-button"></button>
+    <span id="image-name-span" style="vertical-align: center; height: 50px; display: inline-block;">Image name</span>
+    <img id="completed-icon" src="check-mark.svg" alt="Check mark icon by Delapouite http://delapouite.com
+    under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/">
+</div>
+</div>
 <img id="hidden-image" src="testikuva.jpg" hidden>
-<!--
-    <div class="puzzle piece1"></div>
-    <div class="puzzle piece2"></div>
--->
 
-<!--
-Check mark icon by Delapouite http://delapouite.com under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
--->
-
-<!--
-<div id="testTile" class="tile">Kek</div>
-<button onclick="animateTile()">button</button>
--->
 <script src="main.js"></script>
 </body>
 </html>
