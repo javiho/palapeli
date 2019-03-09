@@ -14,7 +14,7 @@
             background-color: red;*/
 
             box-sizing: content-box;
-            background-image: url("testikuva.jpg");
+            /*background-image: url("testikuva.jpg");*/
             background-repeat: no-repeat;
             background-color: black;
             /*border: solid 1px black;*/
@@ -25,15 +25,18 @@
             transition-duration: 1s;
             transition-timing-function: ease-in-out;
         }
+
+        #left-spacing-div{
+            width: 100px;
+        }
+
         #puzzle-area{
             /*
             If a parent element either has position: relative or position: absolute set on it,
             then it will act as the parent for positioning coordinates for its children.
              */
             position: relative;
-            left: 100px;
-            top: 0px;
-            float: left;
+            /*float: left;*/
 
             background-color: white;
             /*border: 2px solid black;
@@ -41,7 +44,7 @@
             width: 500px;*/
         }
 
-        #puzzle-area:after{
+        /*#puzzle-area:after{
             content: '';
             display: block;
             position: relative;
@@ -50,17 +53,17 @@
             border-right-style: solid;
             border-right-width: 1px;
             border-right-color: #888888;
-        }
+        }*/
 
         #game-state-info{
-            display: run-in;
             position: relative;
-            left: 100px;
             height: 100px;
-            float: left;
+            /*float: left;*/
 
             padding-bottom: 5px;
             margin-left: 15px;
+
+            max-width: 20em;
         }
 
         #top-spacing-div{
@@ -76,6 +79,9 @@
             height: 50px;
             width: 50px;
             background-size: contain;
+            /*
+            Card exchange icon by Delapouite http://delapouite.com/ under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+            */
             background: url("card-exchange.svg") no-repeat;
             display: block;
             cursor: pointer;
@@ -89,14 +95,25 @@
         .piece2 {
             background-position:-100px -100px
         }*/
+
+        #image-name-div {
+            position: relative;
+            display: inline-block;
+        }
+
+        #image-select {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
 
 <div id="top-spacing-div">
-
 </div>
-<div id="container1">
+<div id="container1" style="display: flex; flex-wrap: wrap;">
+<div id="left-spacing-div"></div>
 <div id="puzzle-area">
     <!--
     The elements will be like this:
@@ -105,12 +122,24 @@
 </div>
 <div id="game-state-info">
     <button id="shuffle-button"></button>
-    <span id="image-name-span" style="vertical-align: center; height: 50px; display: inline-block;">Image name</span>
+    <select id="image-select" name="image">
+        <option data-alt-text="By Jean de Wavrin - Bibliotheque Nationale de France, MS Fr. 76, Folio 211https://gallica.bnf.fr/ark:/12148/btv1b10528611j/f211.image.r=Français%2076, Public Domain, https://commons.wikimedia.org/w/index.php?curid=31391113"
+                data-file="Combat_dAuberoche_October_1345.jpg">Battle of Auberoche</option>
+        <option data-alt-text="By Hieronymus Bosch - The Yorck Project (2002) 10.000 Meisterwerke der Malerei (DVD-ROM), distributed by DIRECTMEDIA Publishing GmbH. ISBN: 3936122202., Public Domain, https://commons.wikimedia.org/w/index.php?curid=148001"
+                data-file="800px-Hieronymus_Bosch_023.jpg">Hieronymus Bosch</option>
+        <option data-alt-text="Public Domain, https://commons.wikimedia.org/w/index.php?curid=637543"
+                data-file="800px-Meister_von_Astorga.jpg">Meister von Astorga</option>
+        <option data-alt-text="By Froaringus - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=62457456"
+                data-file="1024px-Matanza_dos_Inocentes_1_-_Mondoñedo.jpg">Massacre of the Innocents</option>
+    </select>
+    <!--<div id="image-name-div">
+        (Image name)
+    </div>-->
     <img id="completed-icon" src="check-mark.svg" alt="Check mark icon by Delapouite http://delapouite.com
     under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/">
 </div>
 </div>
-<img id="hidden-image" src="testikuva.jpg" hidden>
+<img id="hidden-image" src="" alt="hidden image" hidden>
 
 <script src="main.js"></script>
 </body>
