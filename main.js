@@ -7,7 +7,7 @@ Tehtävää:
 - pitää skaalautua jos on suurempi alue kuin kuva
 - kuva ei saa venyä
  */
-const sideLength = 5;
+const sideLength = 4;
 const tileWidthPixels = 100;
 const tileBorderWidthPixels = 4;
 let puzzleCompleted = false;
@@ -124,6 +124,8 @@ function getAdjustedImageDimensions(naturalDimensions){
         const scale = desiredHeight / naturalHeight;
         desiredWidth = naturalWidth * scale;
     }
+    //console.log("naturalDimensions:", naturalDimensions);
+    //console.log("desiredWidth:", desiredWidth, "desiredHeight:", desiredHeight);
     return {width: desiredWidth, height: desiredHeight};
 }
 
